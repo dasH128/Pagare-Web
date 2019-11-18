@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MenuPrincipal from '../views/MenuPrincipal.vue'
 import Login from  '../views/Login'
+import Registro from  '../views/RegistroUsuario'
 import Opcion1 from '../views/Opcion1'
 import Opcion2 from '../views/Opcion2'
 import Opcion3 from '../views/Opcion3'
@@ -13,6 +14,11 @@ const routes = [
     path: '/',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/registro',
+    name: 'registro',
+    component: Registro
   },
   {
     path: '/menu',

@@ -28,7 +28,7 @@
                         <v-btn text color="deep-purple accent-4" @click="validarUsuario">
                             Ingresar
                         </v-btn>
-                        <v-btn text color="deep-purple accent-4">
+                        <v-btn text color="deep-purple accent-4" @click="registrarUsuario">
                             Registrarse
                         </v-btn>
                     </v-card-text>
@@ -49,6 +49,10 @@ export default {
         validarUsuario: function(){
             
             this.$router.push('/menu')
+        },
+        registrarUsuario: function(){
+            
+            this.$router.push('/registro')
         }
     }
 }
