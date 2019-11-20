@@ -38,6 +38,7 @@
 
 <script>
 import HelloWorld from './components/HelloWorld';
+import {mapState, mapMutations} from 'vuex'
 
 export default {
   name: 'App',
@@ -49,5 +50,10 @@ export default {
   data: () => ({
     //
   }),
+  computed:{
+    ...mapState([
+      'userActual'
+    ]),
+  }
 };
 </script>
