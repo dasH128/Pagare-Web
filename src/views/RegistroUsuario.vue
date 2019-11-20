@@ -12,7 +12,9 @@
                     <v-col class="d-flex" cols="12" sm="6">
                         <v-select filled
                             :items="distritos"
+                            v-model="userData.distritoId"
                             item-text="nombre"
+                            item-value="id"
                             label="Distrito">
                             <template slot="selection-item" slot-scope="distrito">
                                 {{distrito.nombre}}
@@ -51,6 +53,7 @@
                     </v-col>
                     <v-col class="d-flex" cols="12" sm="6">
                         <v-text-field filled
+                            type="number"
                             v-model="userData.telefono"
                             label="Teléfono"/>
                     </v-col>
@@ -61,12 +64,14 @@
                     </v-col>
                     <v-col class="d-flex" cols="12" sm="12">
                         <v-text-field filled
-                            v-model="userData.password1"
+                            v-model="userData.clave"
+                            type="password"
                             label="Contraseña"/>
                     </v-col>
                     <v-col class="d-flex" cols="12" sm="12">
                         <v-text-field filled
-                            v-model="userData.password2"
+                            v-model="userData.clave2"
+                            type="password"
                             label="Repetir Contraseña"/>
                     </v-col>
                     <v-col class="d-flex" cols="12" sm="12">
@@ -81,28 +86,56 @@
 </template>
 
 <script>
+import axios from "axios"
+import {mapState, mapMutations} from 'vuex'
+
 export default {
     data: () =>({
         userData: {
             razonSocial: '',
-            distrito: '',
+            distritoId: 1,
             ruc:'',
-            provincia: '',
+            provinciaId: '',
             direccion: '',
-            departamento: '',
+            departamentoId: '',
             telefono: '',
             correo:'',
-            password1:'',
-            password2: ''
+            clave:'',
+            clave2: ''
         },
-        distritos: [{id: 1,valor: 1,nombre: 'Soles'},],
+        distritos: [{id: 1,valor: 1,nombre: 'Soles'},{id: 2,valor: 2,nombre: 'Soles2'}],
         provincias: [{id: 1,valor: 1,nombre: 'Soles'},],
         departamentos: [{id: 1,valor: 1,nombre: 'Soles'},]
     }),
+    computed:{
+        ...mapState([
+            'userActual'
+        ]),
+    },
     methods: {
+        ...mapMutations([
+            'setUserActual'
+        ]),
         registrarUsuario: function(){
+            var me = this;
+
+            console.log("registrando...")
+            axios.post("api/Usuario", me.userData)
+                .then((res)=>{
+                    console.log(res)
+                    if(res.data == true){
+                        console.log("se registro satisfactoriamente")
+                        me.setUserActual(res.data)
+                        this.$router.push('/menu')
+                    }else{
+                        alert("Hubo un error. No se registro");
+                        console.log("Nose registro")
+                    }
+                }).
+                catch((err)=>{
+                    console.log("Error: "+err)
+                })
             
-            this.$router.push('/menu')
         }
     }
 }

@@ -13,6 +13,7 @@
                             label="Usuario"
                             name="login"
                             prepend-icon="person"
+                            v-model="userData.correo"
                             type="text"/>
 
                         <v-text-field
@@ -20,6 +21,7 @@
                             label="Contraseña"
                             name="password"
                             prepend-icon="lock"
+                            v-model="userData.clave"
                             type="password"/>
                         </v-form>
                         <v-btn text>
@@ -38,17 +40,41 @@
     </v-container>
 </template>
 <script>
+import axios from "axios"
+import {mapState, mapMutations} from 'vuex'
+
 export default {
     data: () =>({
         userData: {
-            user: '',
-            pass:''
+            correo: '',
+            clave:''
         }
     }),
+    computed:{
+        ...mapState([
+            'userActual'
+        ]),
+    },
     methods: {
+        ...mapMutations([
+            'setUserActual'
+        ]),
         validarUsuario: function(){
-            
-            this.$router.push('/menu')
+            var me = this;
+            axios.post("api/Usuario/validate", me.userData)
+                .then(res =>{
+                    if(res.data.id != 0){
+                        me.setUserActual(res.data)
+                        this.$router.push('/menu')
+                    }else{
+                        alert("Hubo un error Intentelo otra vez");
+                        console.log("Nose Logue")
+                    }
+                })
+                .catch(err => {
+                    console.log("Error: "+err)
+                })
+            // this.$router.push('/menu')
         },
         registrarUsuario: function(){
             
