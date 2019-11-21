@@ -120,7 +120,7 @@ export default {
             var me = this;
 
             console.log("registrando...")
-            axios.post("api/Usuario", me.userData)
+            axios.post("api/Usuario/registrar", me.userData)
                 .then((res)=>{
                     console.log(res)
                     if(res.data == true){

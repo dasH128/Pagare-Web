@@ -14,18 +14,18 @@
           transition="scale-transition"
           width="40"
         />
-  
-        <h1>Name</h1>
+
+        <h1 v-if="userActual">{{userActual.razonSocial}}</h1>
+        <h1 v-if="!userActual">Grupo Finanzas</h1>
       </div>
 
       <v-spacer></v-spacer>
 
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"
         text
       >
-        <span class="mr-2">Latest Release</span>
+      <span class="mr-2" v-if="userActual">Cerrar Sesión</span>
         <v-icon>open_in_new</v-icon>
       </v-btn>
     </v-app-bar>
