@@ -61,7 +61,19 @@ export default {
         ]),
         validarUsuario: function(){
             var me = this;
-            axios.post("api/Usuario/validate", me.userData)
+            var ok = true
+
+            if(me.userData.correo == ''){
+                ok = false
+                alert("Ingrese un correo")
+            }
+            if(me.userData.clave == ''){
+                ok = false
+                alert("Ingrese la contraseña")
+            }
+
+            if(ok == true){
+                axios.post("api/Usuario/validate", me.userData)
                 .then(res =>{
                     if(res.data.id != 0){
                         me.setUserActual(res.data)
@@ -74,6 +86,8 @@ export default {
                 .catch(err => {
                     console.log("Error: "+err)
                 })
+            }
+            
             // this.$router.push('/menu')
         },
         registrarUsuario: function(){
